@@ -1,97 +1,4 @@
 
-Cloud
-Claude finished the response
-Got it — your username is todd751, so the repo is todd751/js-hotspot-builder. Let me verify it's public, has the file, and that jsDelivr serves it.
-
-
-Used Claude in Chrome (2 actions)
-Used Claude in Chrome (2 actions)
-Repo confirmed: todd751/js-hotspot-builder, public, default branch main. Now checking the file is in it and that jsDelivr serves it.
-
-
-Used Claude in Chrome (2 actions)
-Used Claude in Chrome (2 actions)
-Found the snag: your repo right now contains only a README.md (and it's 128 KB) — there's no hotspot-builder.js file in it. It looks like the tool code got pasted into the README instead of added as its own JavaScript file. jsDelivr is looking for a file literally named hotspot-builder.js, so we just need to add that one file.
-
-Let me re-send it so it's handy:
-
-
-Presented files
-Presented files
-Now add it to the repo as its own file:
-
-Download the hotspot-builder.js I just sent (note where it saves — Downloads is fine). ⚠️ If your browser adds a number like hotspot-builder (1).js, rename it back to exactly hotspot-builder.js — the name has to match precisely.
-Go to your repo page: github.com/todd751/js-hotspot-builder
-Click Add file (the button just above the file list, next to the green Code button) → Upload files.
-On the upload screen, drag hotspot-builder.js into the box that says "Drag files here…" (or click choose your files and select it).
-Wait for it to show the filename hotspot-builder.js, then scroll down and click the green Commit changes button.
-You should now see two files listed in the repo: README.md and hotspot-builder.js.
-Don't worry about the README — it's harmless and we won't use it; we just need the .js file sitting alongside it.
-
-Once you've committed it, say done and I'll immediately check that jsDelivr is serving it, then wire the URL into your template and test the live tool.
-
-
-Hotspot builder
-JS 
-what should be in the readme.md file?
-
-The README doesn't matter for making the tool work — it's just a notes/description file for humans looking at the repo. jsDelivr and your Shopify template only care about hotspot-builder.js. So you can leave the README as-is, empty, or put a short description in it. It has zero effect on whether the tool loads.
-
-That said, right now it's got ~128 KB of pasted code in it (which is why it looks off), so if you want to tidy it up, here's a clean description you can drop in. On the repo, click README.md → the pencil (Edit) icon → select all and delete → paste this → Commit changes:
-
-markdown
-# js-hotspot-builder
-
-Client-side JavaScript for the internal **Hotspot Builder** tool
-(Shoppable Image → Shopify Metaobject) used on AURA Modern Home and BathGems.
-
-The file `hotspot-builder.js` is loaded by the Shopify page template
-`templates/page.hotspot-builder.liquid` via jsDelivr:
-
-https://cdn.jsdelivr.net/gh/todd751/js-hotspot-builder@main/hotspot-builder.js
-
-Hosting the script here (instead of inline in the theme) prevents Shopify's
-page processing from truncating the large inline script. Internal tool —
-not linked in navigation, noindex.
-But that's purely cosmetic and totally optional.
-
-The one thing that actually matters is getting hotspot-builder.js uploaded as its own file in the repo (steps from my last message). Want to just do that upload next? Once hotspot-builder.js shows up in the file list next to the README, tell me done and I'll verify jsDelivr and wire your template.
-
-check if I did it right now
-
-
-Used Claude in Chrome (2 actions)
-Used Claude in Chrome (2 actions)
-Close — the README is cleaned up now (558 bytes ✓), but the file you uploaded is the wrong one. It's hotspot-builder-aura-LOCAL.html (128 KB) — that's the standalone local test page I sent you to try on your computer. We need the JavaScript file instead, the one named hotspot-builder.js (ends in .js, about 85 KB).
-
-Easy to mix up since I sent you several files. Let me send just the right one again:
-
-
-Presented files
-Presented files
-Here's how to get the right one in (and clean up the wrong one):
-
-Upload the correct file:
-
-Click the hotspot-builder.js I just sent and download it. In your Downloads, the correct file ends in .js and is ~85 KB — not the .html one you grabbed last time. (If your browser numbers it like hotspot-builder (1).js, rename it back to exactly hotspot-builder.js.)
-Go to github.com/todd751/js-hotspot-builder → Add file → Upload files.
-Drag in hotspot-builder.js — confirm the name shown ends in .js — then Commit changes.
-Optional cleanup — remove the wrong file:
-
-The stray hotspot-builder-aura-LOCAL.html won't break anything, but to keep the repo tidy: click that file in the repo → click the trash-can (Delete) icon near the top-right → scroll down → Commit changes.
-
-When you're done, the repo should list README.md and hotspot-builder.js (and the .html gone, if you deleted it). Say done and I'll confirm jsDelivr is serving it, then wire your template and we'll test the live tool.
-
-
-Hotspot builder
-JS 
-
-
-
-
-Claude is AI and can make mistakes. Please double-check responses. Give us feedback
-Hotspot builder · JS
- 
 /* ═══════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════ */
@@ -99,7 +6,7 @@ let hotspots = [];
 let selectedId = null;
 let mode = 'place';
 let previewMode = false; // V7: inline preview state
- 
+
 /* ═══════════════════════════════════════════════
    V2 SITE CONFIG — swap this block for BathGems build
 ═══════════════════════════════════════════════ */
@@ -141,10 +48,10 @@ const SITE = {
   }
 };
 let handleEdited = false;
- 
+
 // Defaults — loaded from localStorage if saved
 const PRESET_COLORS = ['#bf5a28','#1c1c1c','#c09836','#5c7a52','#4a7fb5','#8b3a6b','#efefef','#d2c9c3','#bc9879'];
- 
+
 /* ─────────────────────────────────────────────────────────────────────
    V12: Embed credit ("Powered by ...") — change here to update everywhere.
    The link text is FIXED and must not be edited. Only the URL is meant to
@@ -152,7 +59,7 @@ const PRESET_COLORS = ['#bf5a28','#1c1c1c','#c09836','#5c7a52','#4a7fb5','#8b3a6
 ───────────────────────────────────────────────────────────────────── */
 const CREDIT_URL  = 'https://auramodernhome.com/pages/hotspot-tool';
 const CREDIT_TEXT = 'AURA Modern Home Hotspot Builder';
- 
+
 const FONT_OPTIONS = ['Garamond','Roboto','Arial','Helvetica','Georgia','Times New Roman','Verdana','Tahoma','Trebuchet MS','Courier New','Cormorant Garamond','Inter','Lato','Open Sans','Montserrat'];
 const MAX_TITLE_CHARS = 72;
 let defaults = {
@@ -174,7 +81,7 @@ let defaults = {
   imageAlt:          localStorage.getItem('hs_imageAlt')          || 'Shop this look', // V8
   imageTitle:        '' // V2: metaobject title (not persisted — should be per-image)
 };
- 
+
 // V5: image overlay (logo or text) state
 let overlay = {
   enabled:       localStorage.getItem('ovr_enabled')       === 'true',
@@ -191,10 +98,10 @@ let overlay = {
   hyperlink:     localStorage.getItem('ovr_hyperlink')     || ''
 };
 const OVERLAY_MAX_CHARS = 35;
- 
+
 // HTML escape helpers
 function escHTML(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
- 
+
 // Position CSS for overlay (corners + center top/bottom)
 function overlayPosCSS(pos) {
   switch (pos) {
@@ -245,7 +152,7 @@ function buildOverlayHTML(o) {
   }
   return '<div class="si-img-overlay" style="' + css + '">' + inner + '</div>';
 }
- 
+
 // Map font name → CSS font-family stack with generic fallback
 // Uses SINGLE quotes so it can be safely embedded in HTML style="..." attributes
 function fontStack(name) {
@@ -263,7 +170,7 @@ function popInlineCSS(prefix) {
   const size      = defaults['pop'+prefix+'Size'];
   return 'font-family:'+fontStack(font)+';font-weight:'+(bold?'700':'400')+';font-style:'+(italic?'italic':'normal')+';text-decoration:'+(underline?'underline':'none')+';font-size:'+size+'px;';
 }
- 
+
 /* ═══════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════ */
@@ -278,7 +185,7 @@ function init() {
   buildEditSwatches();
   buildEditRingSwatches();
 }
- 
+
 // V7: parameterized font dropdown for Title or Price
 function buildFontDropdownFor(prefix) {
   const sel = document.getElementById('pop-' + prefix.toLowerCase() + '-font');
@@ -332,12 +239,12 @@ function updateNameCounter() {
   w.textContent = len + ' / ' + MAX_TITLE_CHARS + ' characters' + (len >= MAX_TITLE_CHARS ? ' — text will be cut off!' : '');
   w.classList.toggle('over', len >= MAX_TITLE_CHARS);
 }
- 
+
 function updateShowPlus(v) {
   defaults.showPlus = !!v;
   renderHotspots();
 }
- 
+
 /* ─────────────────────────────────────────────────────────────────────
    V10: Auto-fill Title + Price from Shopify product URLs
    Shopify exposes /products/{handle}.js with CORS:* — no proxy needed.
@@ -352,33 +259,33 @@ async function autoFillFromShopify(rawURL) {
   if (!/^https?:\/\//i.test(full)) full = (full.startsWith('//') ? 'https:' : 'https://') + full.replace(/^\/+/, '');
   let parsed;
   try { parsed = new URL(full); } catch (e) { return; }
- 
+
   // Match /products/{handle} (Shopify handles are lowercase alphanumeric + dashes)
   const m = parsed.pathname.match(/\/products\/([a-z0-9][a-z0-9-]*)/i);
   if (!m) return;
   const handle  = m[1];
   const jsonURL = parsed.origin + '/products/' + handle + '.js';
- 
+
   let product;
   try {
     const res = await fetch(jsonURL, { method: 'GET', credentials: 'omit' });
     if (!res.ok) return;
     product = await res.json();
   } catch (e) { return; } // CORS blocked, network error, or non-Shopify host → silent
- 
+
   if (!product || !product.title) return;
- 
+
   const h = getSelected();
   if (!h) return;
- 
+
   // V2: store Shopify tags + product_type on the hotspot for auto-inference
   h.shopifyTags = Array.isArray(product.tags) ? product.tags.map(t => String(t).toLowerCase()) : [];
   h.shopifyProductType = String(product.product_type || '').toLowerCase();
- 
+
   const nameEl  = document.getElementById('e-name');
   const priceEl = document.getElementById('e-price');
   let filledSomething = false;
- 
+
   // Fill Title only if currently empty
   if (!h.name && nameEl && !nameEl.value.trim()) {
     let title = String(product.title).slice(0, MAX_TITLE_CHARS); // respect 72-char cap
@@ -386,7 +293,7 @@ async function autoFillFromShopify(rawURL) {
     nameEl.value = title;
     filledSomething = true;
   }
- 
+
   // Fill Price only if currently empty. Shopify .js price is integer cents.
   if (!h.price && priceEl && !priceEl.value.trim() && typeof product.price === 'number') {
     const priceStr = '$' + (product.price / 100).toFixed(2).replace(/\.00$/, '');
@@ -394,14 +301,14 @@ async function autoFillFromShopify(rawURL) {
     priceEl.value = priceStr;
     filledSomething = true;
   }
- 
+
   if (filledSomething) {
     updateNameCounter();
     renderHotspots(); renderList();
     showAutoFillBadge();
   }
 }
- 
+
 function showAutoFillBadge() {
   let badge = document.getElementById('autofill-badge');
   if (!badge) {
@@ -417,26 +324,26 @@ function showAutoFillBadge() {
   clearTimeout(badge._timer);
   badge._timer = setTimeout(() => { badge.style.opacity = '0'; }, 3000);
 }
- 
+
 // V8: image alt text (controls the <img alt="…"> in the generated HTML)
 function updateImageAlt(v) {
   defaults.imageAlt = (v || '').trim() || 'Shop this look';
 }
- 
+
 // V2: image title (required for metaobject)
 function updateImageTitle(v) {
   defaults.imageTitle = (v || '').trim();
   if (document.getElementById('output-bar').style.display === 'block') generateJSON();
 }
- 
- 
+
+
 /* ── IMAGE OVERLAY HANDLERS (V5) ── */
 function updateOverlay(key, value) {
   // bool coercion for checkbox
   if (key === 'enabled') value = !!value;
   if (key === 'textSize') value = parseInt(value);
   overlay[key] = value;
- 
+
   if (key === 'enabled') {
     document.getElementById('ovr-controls').style.display = value ? '' : 'none';
     document.getElementById('ovr-status').textContent     = value ? 'enabled' : 'disabled';
@@ -461,13 +368,13 @@ function updateOverlay(key, value) {
   }
   renderOverlay();
 }
- 
+
 function toggleOverlayStyle(key, btn) {
   overlay[key] = !overlay[key];
   btn.classList.toggle('active', overlay[key]);
   renderOverlay();
 }
- 
+
 function updateOverlayCounter() {
   const w = document.getElementById('ovr-text-warn');
   if (!w) return;
@@ -475,7 +382,7 @@ function updateOverlayCounter() {
   w.textContent = len + ' / ' + OVERLAY_MAX_CHARS + ' characters' + (len >= OVERLAY_MAX_CHARS ? ' — max reached' : '');
   w.classList.toggle('over', len >= OVERLAY_MAX_CHARS);
 }
- 
+
 // Normalize a URL allowing blank (used for overlay logo + hyperlink fields).
 // Same logic as product URL normalization, but leaves empty strings empty (no default).
 function normalizeURLAllowBlank(url) {
@@ -485,7 +392,7 @@ function normalizeURLAllowBlank(url) {
   if (url.startsWith('//')) return 'https:' + url;
   return 'https://' + url;
 }
- 
+
 // On-blur cleanup for overlay URL/hyperlink fields. Mirrors the product URL behavior.
 function normalizeOverlayURL(key, input) {
   const cleaned = normalizeURLAllowBlank(input.value);
@@ -499,7 +406,7 @@ function normalizeOverlayURL(key, input) {
   }
   renderOverlay();
 }
- 
+
 function buildOverlayFontDropdown() {
   const sel = document.getElementById('ovr-text-font');
   if (!sel) return;
@@ -511,7 +418,7 @@ function buildOverlayFontDropdown() {
     sel.appendChild(o);
   });
 }
- 
+
 function syncOverlayUI() {
   document.getElementById('ovr-enabled').checked = overlay.enabled;
   document.getElementById('ovr-controls').style.display = overlay.enabled ? '' : 'none';
@@ -533,7 +440,7 @@ function syncOverlayUI() {
   if (prev) prev.innerHTML = overlay.logoSrc ? '<img src="'+escHTML(overlay.logoSrc)+'" style="max-width:100%;max-height:60px;border:1px solid var(--border);padding:4px;background:#fff">' : '';
   updateOverlayCounter();
 }
- 
+
 function renderOverlay() {
   const wrap = document.getElementById('img-wrap');
   if (!wrap) return;
@@ -542,7 +449,7 @@ function renderOverlay() {
   const html = buildOverlayHTML(overlay);
   if (html) wrap.insertAdjacentHTML('beforeend', html);
 }
- 
+
 function buildDefaultSwatches() {
   const wrap = document.getElementById('default-swatches');
   wrap.innerHTML = '';
@@ -556,13 +463,13 @@ function buildDefaultSwatches() {
     wrap.appendChild(s);
   });
 }
- 
+
 function syncDefaultSwatches() {
   document.querySelectorAll('#default-swatches .cswatch').forEach((s,i) => {
     s.classList.toggle('active', PRESET_COLORS[i] === defaults.color);
   });
 }
- 
+
 function syncDefaultUI() {
   document.getElementById('d-color-picker').value = defaults.color.length === 7 ? defaults.color : '#bf5a28';
   document.getElementById('d-color-hex').value = defaults.color;
@@ -578,7 +485,7 @@ function syncDefaultUI() {
   const sp = document.getElementById('show-plus');               if (sp) sp.checked = defaults.showPlus;
   const ia = document.getElementById('d-image-alt');             if (ia) ia.value = defaults.imageAlt;
 }
- 
+
 function buildEditSwatches() {
   const wrap = document.getElementById('edit-swatches');
   wrap.innerHTML = '';
@@ -592,13 +499,13 @@ function buildEditSwatches() {
     wrap.appendChild(s);
   });
 }
- 
+
 function syncEditSwatches(color) {
   document.querySelectorAll('#edit-swatches .cswatch').forEach((s,i) => {
     s.classList.toggle('active', PRESET_COLORS[i] === color);
   });
 }
- 
+
 /* ═══════════════════════════════════════════════
    DEFAULT COLOR / SIZE CONTROLS
 ═══════════════════════════════════════════════ */
@@ -646,7 +553,7 @@ function saveDefaults() {
     btn.textContent = 'Save as Default';
   }, 2000);
 }
- 
+
 /* ═══════════════════════════════════════════════
    EDIT PANEL COLOR / SIZE
 ═══════════════════════════════════════════════ */
@@ -680,7 +587,7 @@ function editSize(val) {
   document.getElementById('e-size-val').textContent = val + 'px';
   renderHotspots();
 }
- 
+
 function editPos(val, btn) {
   const h = getSelected(); if (!h) return;
   h.angle = val; // 'center' or a number 0-359
@@ -688,7 +595,7 @@ function editPos(val, btn) {
   btn.classList.add('active');
   renderHotspots();
 }
- 
+
 function editStyle(style, el) {
   const h = getSelected(); if (!h) return;
   h.style = style;
@@ -696,7 +603,7 @@ function editStyle(style, el) {
   el.classList.add('active');
   renderHotspots();
 }
- 
+
 function editRingColorFromPicker(val) {
   const h = getSelected(); if (!h) return;
   h.ringColor = val;
@@ -720,7 +627,7 @@ function matchRingToDot() {
   syncEditRingSwatches(h.color);
   renderHotspots();
 }
- 
+
 /* V7: ring-color preset swatches (mirror dot-color swatches) */
 function buildEditRingSwatches() {
   const wrap = document.getElementById('edit-ring-swatches');
@@ -749,11 +656,11 @@ function editRingColorFromSwatch(color) {
   syncEditRingSwatches(color);
   renderHotspots();
 }
- 
+
 /* ═══════════════════════════════════════════════
    IMAGE LOADING — URL only (V11: file upload removed)
 ═══════════════════════════════════════════════ */
- 
+
 // ── Load from URL (primary path) ──
 function loadFromURL() {
   const input = document.getElementById('url-input');
@@ -771,26 +678,26 @@ function loadFromURL() {
     showURLError('Could not load that image. Make sure the URL ends in .jpg / .png / .webp and is publicly accessible.');
   });
 }
- 
+
 function showURLError(msg) {
   const el = document.getElementById('url-error');
   el.textContent = msg; el.style.display = 'block';
 }
- 
+
 function showLoadingState(on) {
   const btn = document.querySelector('#upload-zone .btn.primary');
   if (btn) { btn.textContent = on ? 'Loading…' : 'Load Image'; btn.disabled = on; }
 }
- 
+
 // ── Core: set the image and show canvas ──
 // srcForDisplay = what goes in the <img> tag for the builder
 // srcForOutput  = what goes in the generated HTML (null = use srcForDisplay)
 function revealImage(srcForDisplay, srcForOutput, onSuccess, onError) {
   const img = document.getElementById('preview-img');
- 
+
   // Store the output src (the original URL) on the element for generateHTML
   img.dataset.outputSrc = srcForOutput || srcForDisplay;
- 
+
   img.onload = () => {
     document.getElementById('img-dims').textContent =
       img.naturalWidth + ' × ' + img.naturalHeight + 'px';
@@ -813,14 +720,14 @@ function revealImage(srcForDisplay, srcForOutput, onSuccess, onError) {
   };
   img.src = srcForDisplay;
 }
- 
+
 // V11: full reload — guarantees every bit of state, every DOM event listener,
 // every cached observer is gone. Saved defaults in localStorage still apply.
 function changeImage() {
   if (hotspots.length > 0 && !confirm('Start a new image? Any unsaved hotspots will be cleared.')) return;
   window.location.reload();
 }
- 
+
 /* ═══════════════════════════════════════════════
    PREVIEW — opens a clean popup window
 ═══════════════════════════════════════════════ */
@@ -832,7 +739,7 @@ function getPopupCSS() {
     minimal: 'background:rgba(10,8,6,0.52);color:#ffffff;backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.1);'
   }[defaults.popup] || '';
 }
- 
+
 // V7: inline preview — toggles a live preview state ON the current canvas.
 // In preview mode: hovering a dot shows its popup; clicking the image does NOT
 // place new hotspots; all other controls (sidebar settings, edit panel) still
@@ -864,20 +771,20 @@ function openPreview() {
   }
   renderHotspots();
 }
- 
+
 // Old new-window preview — superseded by the inline V7 preview above.
 // Kept here so we don't lose the code path until we're sure inline preview is solid.
 function _openPreviewWindow_DEPRECATED() {
   const img = document.getElementById('preview-img');
   const imgSrc = img.dataset.outputSrc || img.src;
   const popupStyle = document.getElementById('popup-style').value;
- 
+
   const popupCSS = {
     dark:    'background:#1c1a17;color:#f4efe5;box-shadow:0 4px 18px rgba(0,0,0,0.35);',
     light:   'background:#ffffff;color:#1c1a17;border:1px solid #ddd;box-shadow:0 4px 18px rgba(0,0,0,0.12);',
     minimal: 'background:rgba(10,8,6,0.52);color:#ffffff;backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.1);'
   }[popupStyle];
- 
+
   const data = JSON.stringify(hotspots.map(h => ({
     x: parseFloat(h.x.toFixed(4)),
     y: parseFloat(h.y.toFixed(4)),
@@ -891,7 +798,7 @@ function _openPreviewWindow_DEPRECATED() {
     ringColor: h.ringColor || '#ffffff',
     altText: h.name || 'View product'
   })));
- 
+
   // Build preview HTML without any <script> tags inside the template literal
   // (a <script> tag inside a template literal inside a <script> block breaks HTML parsing)
   const previewHTML = `<!DOCTYPE html>
@@ -921,7 +828,7 @@ body { background:#111; display:flex; flex-direction:column; align-items:center;
 <span class="note">Close this window to return to the builder</span>
 </body>
 </html>`;
- 
+
   const pw = window.open('', '_blank', 'width=960,height=800,resizable=yes,scrollbars=yes');
   if (!pw) {
     alert('Pop-up blocked. Please allow pop-ups for this page and try again.');
@@ -929,7 +836,7 @@ body { background:#111; display:flex; flex-direction:column; align-items:center;
   }
   pw.document.write(previewHTML);
   pw.document.close();
- 
+
   // Inject the hotspot JS after the document is written, avoiding any script tags in the template literal
   const scriptFn = function(D, popCSS, TYPO) {
     var W = document.getElementById('si-wrap');
@@ -1010,7 +917,7 @@ body { background:#111; display:flex; flex-direction:column; align-items:center;
     if(window.ResizeObserver){var ro=new ResizeObserver(safeBuild);ro.observe(I);ro.observe(W);}
     if(window.MutationObserver){var mo=new MutationObserver(function(){if(I.complete&&I.naturalWidth)safeBuild();});mo.observe(I,{attributes:true,attributeFilter:['src','srcset']});}
   };
- 
+
   // Serialize the hotspot data and popup CSS into the popup window's scope
   // V7: font baked into tt and pt
   const TYPO = { tt: popInlineCSS('Title'), pt: popInlineCSS('Price'), showPlus: defaults.showPlus };
@@ -1019,7 +926,7 @@ body { background:#111; display:flex; flex-direction:column; align-items:center;
   s.textContent = initCode;
   pw.document.body.appendChild(s);
 }
- 
+
 /* ═══════════════════════════════════════════════
    MODE (kept minimal — only 'place' used now)
 ═══════════════════════════════════════════════ */
@@ -1034,7 +941,7 @@ function setMode(m) {
   document.getElementById('mode-hint').textContent = 'Click image to place';
   document.getElementById('mode-hint').style.display = 'flex';
 }
- 
+
 /* ═══════════════════════════════════════════════
    PLACE HOTSPOT ON CLICK
 ═══════════════════════════════════════════════ */
@@ -1055,7 +962,7 @@ document.getElementById('img-wrap').addEventListener('click', function(e) {
   document.getElementById('gen-btn').style.display = 'inline-block';
   document.getElementById('e-url').focus();
 });
- 
+
 /* ═══════════════════════════════════════════════
    RENDER HOTSPOTS
 ═══════════════════════════════════════════════ */
@@ -1065,7 +972,7 @@ function renderHotspots() {
   const img  = document.getElementById('preview-img');
   const IR = img.getBoundingClientRect();
   if (!IR.width || !IR.height) return;
- 
+
   // Static overlay covers the wrapper 100% — the image fills the wrapper exactly
   // (width:100%;height:auto + matching aspect-ratio), so % positions are identical
   // to the old getBoundingClientRect approach but immune to browser/theme layout shifts.
@@ -1073,7 +980,7 @@ function renderHotspots() {
   overlay.className = 'hs-overlay';
   overlay.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;';
   wrap.appendChild(overlay);
- 
+
   hotspots.forEach((h, i) => {
     const dot = document.createElement('div');
     dot.className = 'hs' + (h.id === selectedId ? ' selected' : '');
@@ -1087,7 +994,7 @@ function renderHotspots() {
     dot.style.width  = sz + 'px';
     dot.style.height = sz + 'px';
     dot.style.pointerEvents = 'auto';
- 
+
     const body = document.createElement('div');
     body.className = 'hs-body';
     body.style.width  = sz + 'px';
@@ -1096,7 +1003,7 @@ function renderHotspots() {
     if (h.style === 'pulse') h.style = 'pulsering';
     const hStyle = h.style || 'pulsering';
     const ringCol = h.ringColor || '#ffffff';
- 
+
     if (hStyle === 'ring') {
       body.style.background = 'transparent';
       body.style.border = '2.5px solid ' + h.color;
@@ -1134,7 +1041,7 @@ function renderHotspots() {
       pulse.style.borderColor = h.color;
       body.appendChild(pulse);
     }
- 
+
     const plus = document.createElement('div');
     plus.className = 'hs-plus';
     plus.style.fontSize = Math.round(sz * 0.52) + 'px';
@@ -1143,16 +1050,16 @@ function renderHotspots() {
     if (hStyle === 'ring' || hStyle === 'pulsering' || !defaults.showPlus) plus.style.display = 'none';
     // Apply ring color to border (ring + pulsering use dot color for their border; others use ringCol)
     if (hStyle !== 'ring' && hStyle !== 'pulsering') body.style.border = '2.5px solid ' + ringCol;
- 
+
     const num = document.createElement('div');
     num.className = 'hs-num';
     num.textContent = i + 1;
     num.style.display = document.getElementById('show-numbers').checked ? 'flex' : 'none';
- 
+
     body.appendChild(plus);
     body.appendChild(num);
     dot.appendChild(body);
- 
+
     // V7/V9: in preview mode, attach a hover popup mirroring the generated output.
     // V9: only render the popup when there's a Title — otherwise the dot is just a clickable link.
     if (previewMode && (h.name || '').trim()) {
@@ -1175,7 +1082,7 @@ function renderHotspots() {
       dot.addEventListener('mouseleave', e => { if (!pop.contains(e.relatedTarget)) { pop.style.opacity = '0'; pop.style.pointerEvents = 'none'; } });
       pop.addEventListener('mouseleave', e => { if (!dot.contains(e.relatedTarget)) { pop.style.opacity = '0'; pop.style.pointerEvents = 'none'; } });
     }
- 
+
     dot.addEventListener('click', e => {
       e.stopPropagation();
       if (mode === 'preview') {
@@ -1186,11 +1093,11 @@ function renderHotspots() {
         renderHotspots(); renderList();
       }
     });
- 
+
     overlay.appendChild(dot);
   });
 }
- 
+
 /* ═══════════════════════════════════════════════
    EDIT PANEL
 ═══════════════════════════════════════════════ */
@@ -1198,9 +1105,9 @@ function openEditPanel(id) {
   const h = hotspots.find(h => h.id === id);
   if (!h) return;
   const idx = hotspots.indexOf(h);
- 
+
   selectedId = id; // ← always sync selectedId so pushEdit/editSize/editColor all work
- 
+
   document.getElementById('edit-panel').style.display = 'block';
   document.getElementById('edit-panel-num').textContent = '#' + (idx + 1);
   document.getElementById('e-name').value  = h.name;
@@ -1229,7 +1136,7 @@ function openEditPanel(id) {
   });
   syncEditSwatches(h.color);
 }
- 
+
 function pushEdit() {
   const h = getSelected(); if (!h) return;
   h.name  = document.getElementById('e-name').value;
@@ -1238,11 +1145,11 @@ function pushEdit() {
   updateNameCounter();
   renderHotspots(); renderList();
 }
- 
+
 function getSelected() {
   return hotspots.find(h => h.id === selectedId) || null;
 }
- 
+
 function deleteSelected() {
   const idx = hotspots.findIndex(h => h.id === selectedId);
   if (idx !== -1) hotspots.splice(idx, 1);
@@ -1254,7 +1161,7 @@ function deleteSelected() {
     document.getElementById('output-bar').style.display = 'none';
   }
 }
- 
+
 /* ═══════════════════════════════════════════════
    LIST
 ═══════════════════════════════════════════════ */
@@ -1271,21 +1178,21 @@ function renderList() {
   hotspots.forEach((h, i) => {
     const item = document.createElement('div');
     item.className = 'hs-item' + (h.id === selectedId ? ' selected' : '');
- 
+
     const dot = document.createElement('div');
     dot.className = 'dot';
     dot.style.background = h.color;
     dot.textContent = i + 1;
- 
+
     const name = document.createElement('div');
     name.className = 'name' + (h.name ? '' : ' empty');
     name.textContent = h.name || 'unnamed';
- 
+
     const del = document.createElement('button');
     del.className = 'del-btn';
     del.textContent = '×';
     del.onclick = e => { e.stopPropagation(); removeHotspot(h.id); };
- 
+
     item.appendChild(dot); item.appendChild(name); item.appendChild(del);
     item.onclick = () => {
       selectedId = h.id;
@@ -1296,7 +1203,7 @@ function renderList() {
   });
   list.appendChild(ul);
 }
- 
+
 function removeHotspot(id) {
   const idx = hotspots.findIndex(h => h.id === id);
   if (idx !== -1) hotspots.splice(idx, 1);
@@ -1310,7 +1217,7 @@ function removeHotspot(id) {
     document.getElementById('output-bar').style.display = 'none';
   }
 }
- 
+
 function normalizeURL(url) {
   if (!url || !url.trim()) return 'https://auramodernhome.com';
   url = url.trim();
@@ -1321,7 +1228,7 @@ function normalizeURL(url) {
   // Looks like a domain/path — prepend https://
   return 'https://' + url;
 }
- 
+
 /* ═══════════════════════════════════════════════
    GENERATE HTML
 ═══════════════════════════════════════════════ */
@@ -1334,13 +1241,13 @@ function generateHTML() {
   // Capture natural dimensions to lock aspect ratio in output HTML
   const natW = img.naturalWidth || 0;
   const natH = img.naturalHeight || 0;
- 
+
   const popupCSS = {
     dark:    'background:#1c1a17;color:#f4efe5;box-shadow:0 4px 18px rgba(0,0,0,0.35);',
     light:   'background:#ffffff;color:#1c1a17;border:1px solid #ddd;box-shadow:0 4px 18px rgba(0,0,0,0.12);',
     minimal: 'background:rgba(10,8,6,0.52);color:#ffffff;backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.1);'
   }[popupStyle];
- 
+
   const data = JSON.stringify(hotspots.map(h => ({
     x: parseFloat(h.x.toFixed(4)),
     y: parseFloat(h.y.toFixed(4)),
@@ -1354,7 +1261,7 @@ function generateHTML() {
     ringColor: h.ringColor || '#ffffff',
     altText: h.name || 'View product'
   })));
- 
+
   // Clean, self-contained output — no base64 image, uses the image src as-is
   const dimAttr = (natW && natH) ? ` width="${natW}" height="${natH}"` : '';
   const aspectCSS = (natW && natH) ? `aspect-ratio:${natW}/${natH};` : '';
@@ -1362,7 +1269,7 @@ function generateHTML() {
   const titleCSS = popInlineCSS('Title');
   const priceCSS = popInlineCSS('Price');
   const overlayHTML = buildOverlayHTML(overlay);
- 
+
   const output = `<!-- Shoppable Image | Built with Hotspot Builder | VERSION: V15 -->
 <div class="si-wrap" style="position:relative;display:block;width:100%;max-width:100%;font-family:sans-serif;line-height:0;font-size:0;">
 <img src="${isBase64 ? '[REPLACE_WITH_YOUR_IMAGE_URL]' : imgSrc}" alt="${escHTML(defaults.imageAlt || 'Shop this look')}"${dimAttr} style="display:block;width:100%;height:auto;border-radius:3px;${aspectCSS}">
@@ -1466,18 +1373,18 @@ if(!document.getElementById('si-css')){var s=document.createElement('style');s.i
 })();${'<'}/script>
 </div>
 <p class="si-credit" style="font-size:11px;color:#9a9a9a;font-weight:400;font-family:Arial,sans-serif;letter-spacing:0.02em;line-height:1.5;margin:8px 0 0;padding:0;text-align:right;">Powered by <a href="${escHTML(CREDIT_URL)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;font-weight:inherit;">${escHTML(CREDIT_TEXT)}</a></p>`;
- 
+
   document.getElementById('output-code').value = output;
   document.getElementById('output-bar').style.display = 'block';
   document.getElementById('output-bar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
- 
+
   // Note if image is base64 (uploaded from computer)
   if (isBase64) {
     document.getElementById('output-code').value = output +
       '\n\n<!-- ⚠️ Replace [REPLACE_WITH_YOUR_IMAGE_URL] with your Shopify CDN image URL -->';
   }
 }
- 
+
 function copyHTML() {
   const ta = document.getElementById('output-code');
   ta.select(); ta.setSelectionRange(0, 99999);
@@ -1491,12 +1398,12 @@ function copyHTML() {
   btn.classList.add('copied');
   setTimeout(() => { btn.innerHTML = '📄 Copy for NEW Image<br><span style="font-size:9px;opacity:.8;font-weight:400">(full metaobject)</span>'; btn.classList.remove('copied'); }, 2200);
 }
- 
+
 /* ═══════════════════════════════════════════════
    V2: AUTO-INFERENCE — tags derived from Shopify product data
 ═══════════════════════════════════════════════ */
 function normalizeTag(s) { return String(s || '').toLowerCase().trim().replace(/\s+/g,'-'); }
- 
+
 function allSignals() {
   const bag = new Set();
   hotspots.forEach(h => {
@@ -1506,7 +1413,7 @@ function allSignals() {
   });
   return bag;
 }
- 
+
 function inferMulti(dim) {
   const bag = allSignals();
   return SITE.vocab[dim].filter(v => {
@@ -1516,7 +1423,7 @@ function inferMulti(dim) {
     return false;
   });
 }
- 
+
 function inferProductTypes() {
   const found = new Set();
   hotspots.forEach(h => {
@@ -1528,7 +1435,7 @@ function inferProductTypes() {
   });
   return Array.from(found);
 }
- 
+
 function inferRoom() {
   const pts = inferProductTypes();
   const votes = {};
@@ -1538,7 +1445,7 @@ function inferRoom() {
   const winner = Object.keys(votes).sort((a,b) => votes[b] - votes[a])[0];
   return winner || '';
 }
- 
+
 function inferSize() {
   if (!SITE.vocab.size) return [];
   const found = new Set();
@@ -1576,7 +1483,7 @@ function inferMount() {
   });
   return found;
 }
- 
+
 function inferAllTags() {
   const out = {
     room: inferRoom(),
@@ -1590,11 +1497,11 @@ function inferAllTags() {
   if (SITE.vocab.mount) out.mount = inferMount();
   return out;
 }
- 
+
 function autoHandle(title) {
   return (title || '').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);
 }
- 
+
 /* ═══════════════════════════════════════════════
    V2: GENERATE JSON for Shopify metaobject
 ═══════════════════════════════════════════════ */
@@ -1604,7 +1511,7 @@ function generateJSON() {
   const title = (defaults.imageTitle || '').trim();
   const handle = autoHandle(title);
   const tags = inferAllTags();
- 
+
   const obj = {
     handle: handle,
     title: title,
@@ -1628,7 +1535,7 @@ function generateJSON() {
     ringColor: h.ringColor || '#ffffff',
     altText: h.name || 'View product'
   })));
- 
+
   // Completeness check
   const missing = [];
   if (!obj.title) missing.push('Image Title (in Default Settings)');
@@ -1637,7 +1544,7 @@ function generateJSON() {
   if (!hotspots.length) missing.push('At least one hotspot');
   if (hotspots.some(h => !h.name || !h.url)) missing.push('Every hotspot needs a Name + URL');
   if (!obj.room) missing.push('Room could not be auto-detected — add more product hotspots');
- 
+
   const check = document.getElementById('completeness-check');
   check.style.display = 'block';
   if (missing.length) {
@@ -1656,14 +1563,14 @@ function generateJSON() {
     });
     check.innerHTML = '<strong>✓ Ready.</strong> Auto-detected → ' + tagSummary;
   }
- 
+
   document.getElementById('output-code').value = JSON.stringify(obj, null, 2);
   document.getElementById('output-bar').style.display = 'block';
   document.getElementById('output-bar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
- 
+
 function copyJSON() { copyHTML(); }  // same textarea
- 
+
 function copyHotspotsOnly() {
   const img = document.getElementById('preview-img');
   const hs = JSON.stringify(hotspots.map(h => ({
@@ -1675,22 +1582,22 @@ function copyHotspotsOnly() {
   })));
   navigator.clipboard.writeText(hs).then(() => alert('hotspots_json copied — paste into that single field on the metaobject.'));
 }
- 
+
 /* ═══════════════════════════════════════════════
    V2: ONE-CLICK SAVE TO SHOPIFY via Cloudflare Worker
 ═══════════════════════════════════════════════ */
 const WORKER_URL = 'https://hotspot-metaobject-proxy.lakebluemedia.workers.dev';
- 
+
 async function saveToShopify() {
   // Regenerate JSON first to ensure output-code is fresh
   generateJSON();
- 
+
   // Parse the JSON from the output-code textarea
   const jsonText = document.getElementById('output-code').value;
   let payload;
   try { payload = JSON.parse(jsonText); }
   catch(e) { showSaveError('Could not parse the JSON output. Try clicking Regenerate first.'); return; }
- 
+
   // Client-side completeness check — Shopify requires these
   const required = ['title','image_url','alt_text','room','hotspots_json'];
   const missing = required.filter(k => !payload[k] || (Array.isArray(payload[k]) && !payload[k].length));
@@ -1698,11 +1605,11 @@ async function saveToShopify() {
     showSaveError('Cannot save — missing required fields: ' + missing.join(', ') + '.\n\nFill them in and try again. Check the red "Not ready to save" line above.');
     return;
   }
- 
+
   const btn = event && event.target ? event.target.closest('button') : null;
   const originalHTML = btn ? btn.innerHTML : '';
   if (btn) { btn.disabled = true; btn.innerHTML = '⏳ Saving…'; btn.style.opacity = '.7'; }
- 
+
   try {
     const res = await fetch(WORKER_URL, {
       method: 'POST',
@@ -1710,9 +1617,9 @@ async function saveToShopify() {
       body: JSON.stringify({ site: SITE.key, metaobject: payload })
     });
     const data = await res.json();
- 
+
     if (btn) { btn.disabled = false; btn.innerHTML = originalHTML; btn.style.opacity = '1'; }
- 
+
     if (data.success) {
       showSaveSuccess(data.handle, data.embed);
     } else {
@@ -1724,7 +1631,7 @@ async function saveToShopify() {
     showSaveError('Network error contacting the Worker: ' + e.message);
   }
 }
- 
+
 function showSaveSuccess(handle, _ignoredEmbedFromWorker) {
   // Construct both formats from the handle — do NOT trust the Worker's `embed` field,
   // which may return either format depending on Worker version.
@@ -1745,7 +1652,7 @@ function showSaveSuccess(handle, _ignoredEmbedFromWorker) {
     '<div style="font-size:10px;color:#9a9a9a;line-height:1.5">For direct use inside a theme template (.liquid) file:<br><code style="background:#0a0a0a;padding:2px 5px;border-radius:2px;color:#9a9a9a;font-size:10px">' + liquidTag + '</code></div>';
   check.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
- 
+
 function showSaveError(msg) {
   const check = document.getElementById('completeness-check');
   check.style.display = 'block';
@@ -1754,7 +1661,7 @@ function showSaveError(msg) {
   check.innerHTML = '<strong>⚠ Save failed:</strong><pre style="white-space:pre-wrap;font-family:DM Mono,monospace;font-size:10px;margin-top:6px">' + msg + '</pre>';
   check.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
- 
+
 function copyEmbedSnippet() {
   const el = document.getElementById('embed-snippet');
   if (!el) return;
@@ -1765,13 +1672,8 @@ function copyEmbedSnippet() {
     setTimeout(() => { btn.textContent = orig; }, 1800);
   });
 }
- 
+
 /* ═══════════════════════════════════════════════
    BOOT
 ═══════════════════════════════════════════════ */
 init();
- 
-
-
-
-
